@@ -1,0 +1,27 @@
+# 의존성
+node_modules/
+
+# 비밀 / 도구
+.env
+.gstack/
+
+# Bronze — 대용량 원본 / 캐시 / 오류 (재생성 가능, 추적 제외)
+build/bronze/raw/
+build/bronze/api_cache/
+build/bronze/api_errors/
+
+# Silver — 스냅샷 / 변경분 (재생성 가능, 추적 제외)
+build/silver/snapshots/*.json
+build/silver/snapshots/*.json.gz
+build/silver/changes/
+
+# Gold — 월별 paldal_YYYY_MM.geojson + paldal_current.{geojson,js} 모두 추적
+# (STEP 7-B 2026-05-24: Vercel 배포 위해 paldal_current.* 추적 시작.
+#  8MB → gzip ~720KB. 월 1회 변경, JSON diff 노이즈 감당 가능.)
+build/gold/geojson/*.gz
+build/gold/geojson/*_simplified.geojson
+build/gold/geojson/*_backup_*.geojson
+
+# 추적 유지: build/gold/geojson/*.geojson · build/gold/geojson/paldal_current.js ·
+#   build/bronze/master/ · build/silver/quality_reports/ · config/ · docs/ ·
+#   scripts/ · 페이지 소스

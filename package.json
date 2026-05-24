@@ -1,0 +1,18 @@
+{
+  "name": "green-remodeling-map",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "수원시 팔달구 그린리모델링 대상 건축물 지도 (단독 페이지)",
+  "scripts": {
+    "build": "node --env-file=.env build/build_targets.mjs",
+    "pipeline": "node --env-file=.env scripts/build/pipeline.mjs",
+    "pipeline:trial": "node --env-file=.env scripts/build/pipeline.mjs --trial=13800",
+    "serve": "node scripts/serve.mjs",
+    "serve:port": "node scripts/serve.mjs --port=8848"
+  },
+  "dependencies": {
+    "proj4": "^2.20.8",
+    "shapefile": "^0.6.6"
+  }
+}

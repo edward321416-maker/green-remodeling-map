@@ -1,0 +1,17 @@
+{
+  "_note": "그린리모델링 대상 선정·품질 판정 임계값의 단일 출처(Single Source of Truth). pipeline.mjs 가 빌드 시작 시 로드한다. 향후 Phase 3 ROI 기반 대상 선정 개편 시 이 파일만 수정하면 된다 — 코드는 건드리지 않는다.",
+  "schema": "v1",
+
+  "target_selection": {
+    "_note": "그린리모델링 대상 건물 선정 기준. 둘 다 충족해야 is_target=true.",
+    "min_age_years": 15,
+    "min_gross_floor_area_m2": 500
+  },
+
+  "quality_thresholds": {
+    "_note": "품질 검증 임계값. 이상치(area_mismatch)는 Tukey IQR 펜스 방식 — 1:1 매칭 건물 polygon_arch_ratio 의 [Q1 - k*IQR, Q3 + k*IQR] 밖을 플래그. 고정 비율이 아닌 데이터 자기보정 방식.",
+    "outlier_method": "tukey_iqr",
+    "outlier_iqr_multiplier": 1.5,
+    "polygon_min_area_m2": 1
+  }
+}

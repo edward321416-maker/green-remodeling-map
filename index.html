@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>수원시 팔달구 그린리모델링 대상 건축물 지도</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav id="topnav">
+    <a href="#hero" class="brand">
+      <span class="brand-mark">AGE</span>
+      <span class="brand-name">Algorithmic Ground Explorer</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#analysis">분석</a></li>
+      <li><a href="#map-section">지도</a></li>
+      <li><a href="#ranking">순위</a></li>
+      <li><a href="#sources">출처</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-content">
+      <p class="eyebrow">수원시 팔달구 · 2026년 5월 분석</p>
+      <h1 class="hero-title">그린리모델링 우선 대상 발굴</h1>
+      <p class="hero-figure">
+        <span class="hero-display">4,309</span>
+        <span class="hero-unit">동</span>
+      </p>
+      <p class="hero-caption">전체 25,302동 중 17.0% · 2026년 5월 기준</p>
+      <div class="hero-cta">
+        <a href="#map-section" class="btn-primary">지도에서 보기 <span aria-hidden="true">→</span></a>
+        <a href="#analysis" class="btn-secondary">분석 과정 <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="analysis">
+    <div class="section-container">
+      <p class="eyebrow">분석 파이프라인</p>
+      <h2 class="section-title">4단계로 4,309동을 도출했습니다</h2>
+
+      <div class="analysis-flow">
+        <article class="analysis-card" data-step="1">
+          <button type="button" class="card-toggle"
+                  id="card-1-toggle"
+                  aria-expanded="false" aria-controls="card-1-detail">
+            <span class="step-num" aria-hidden="true">①</span>
+            <span class="step-label">수집</span>
+            <span class="step-figure">
+              <span class="step-num-display">25,302</span><span class="step-unit">동</span>
+            </span>
+            <span class="step-body">NGII 연속수치지도 → 팔달구 추출</span>
+            <svg class="card-chevron" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="card-detail" id="card-1-detail"
+               role="region" aria-labelledby="card-1-toggle" hidden>
+            <p>시군구코드 41115 필터. 39 SHP 세트 중 건물 레이어(N3A_B0010000) 25,302동을 모집단으로 확정.</p>
+          </div>
+        </article>
+
+        <svg class="flow-arrow" viewBox="0 0 48 24" fill="none" aria-hidden="true">
+          <path d="M2 12 L40 12 M34 6 L40 12 L34 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        <article class="analysis-card" data-step="2">
+          <button type="button" class="card-toggle"
+                  id="card-2-toggle"
+                  aria-expanded="false" aria-controls="card-2-detail">
+            <span class="step-num" aria-hidden="true">②</span>
+            <span class="step-label">정제</span>
+            <span class="step-figure">
+              <span class="step-num-display">19,301</span><span class="step-unit">동</span>
+            </span>
+            <span class="step-body">건축HUB 표제부 일괄조회 → 도로명 조인</span>
+            <svg class="card-chevron" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="card-detail" id="card-2-detail"
+               role="region" aria-labelledby="card-2-toggle" hidden>
+            <p>초기 지번 PNU 조인은 11% 매칭에 그침. 분석 후 도로명 조인이 정답임을 확인. EPSG:5179 → WGS84 reproject. 22 법정동, 168 API call로 15,564 표제부 확보.</p>
+          </div>
+        </article>
+
+        <svg class="flow-arrow" viewBox="0 0 48 24" fill="none" aria-hidden="true">
+          <path d="M2 12 L40 12 M34 6 L40 12 L34 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        <article class="analysis-card" data-step="3">
+          <button type="button" class="card-toggle"
+                  id="card-3-toggle"
+                  aria-expanded="false" aria-controls="card-3-detail">
+            <span class="step-num" aria-hidden="true">③</span>
+            <span class="step-label">매칭</span>
+            <span class="step-figure">
+              <span class="step-num-display">76.3</span><span class="step-unit">%</span>
+            </span>
+            <span class="step-body">카디널리티 추적 (1:1 · 1:N · N:1 · N:M)</span>
+            <svg class="card-chevron" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="card-detail" id="card-3-detail"
+               role="region" aria-labelledby="card-3-toggle" hidden>
+            <p>성공 19,301 / 실패 6,001. 실패 분해: 도로명주소 자체 없음(18.3%, 4,633동) + 건축물대장 미등재(5.4%, 1,368동). 카디널리티: 1:1 매칭 9,388동 (48.6%), 한 표제부에 여러 폴리곤이 붙는 N:1·N:M 케이스 9,762동 (50.6%) — 대형 단지·복합건물에서 흔히 발생. (그 외 1:N 151동 / 0.8%)</p>
+          </div>
+        </article>
+
+        <svg class="flow-arrow" viewBox="0 0 48 24" fill="none" aria-hidden="true">
+          <path d="M2 12 L40 12 M34 6 L40 12 L34 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        <article class="analysis-card is-target" data-step="4">
+          <button type="button" class="card-toggle"
+                  id="card-4-toggle"
+                  aria-expanded="false" aria-controls="card-4-detail">
+            <span class="step-num" aria-hidden="true">④</span>
+            <span class="step-label">발굴</span>
+            <span class="step-figure">
+              <span class="step-num-display">4,309</span><span class="step-unit">동</span>
+            </span>
+            <span class="step-body">준공 15년+ AND 연면적 500㎡+</span>
+            <svg class="card-chevron" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="card-detail" id="card-4-detail"
+               role="region" aria-labelledby="card-4-toggle" hidden>
+            <p>조건 충족률 22.3% (매칭 19,301동 대비). 평균 경과 30.9년 (중간값 30년), 평균 연면적 7,225㎡ (중간값 1,695㎡). 인계동(1,281), 화서동(783), 우만동(733) 상위 3개 동.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="map-section" class="is-loading">
+    <header class="map-section-header">
+      <p class="eyebrow">지도 탐색</p>
+      <h2 class="section-title">위치와 분포</h2>
+    </header>
+    <div id="map">
+      <div id="map-msg" hidden></div>
+
+      <!-- 로딩 스켈레톤 (STEP 6-B) — GeoJSON fetch 중. app.js init 완료 시 .is-loaded -->
+      <div class="map-loading" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>그린리모델링 대상 데이터 로딩 중…</p>
+        <p class="map-loading-sub">팔달구 건물 25,302동 / 약 720KB</p>
+      </div>
+
+      <!-- 통계 칩 (좌상단 오버레이) — 필터 결과에 따라 동적 갱신 -->
+      <div id="stats-chip" class="map-overlay map-overlay--top-left" aria-live="polite">
+        <div class="stats-primary"><strong id="stat-count">—</strong><span class="stats-unit"> 동</span></div>
+        <div class="stats-meta">평균 <strong id="stat-avg-age">—</strong>년 · <strong id="stat-avg-gfa">—</strong>㎡</div>
+      </div>
+
+      <!-- 필터 트리거 (모바일 전용 — CSS로 데스크톱 숨김) -->
+      <button type="button" id="filter-trigger" aria-label="필터 시트 열기" aria-controls="filter-overlay">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 3h12M4 8h8M6 13h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        필터
+      </button>
+
+      <!-- 필터 (데스크톱: 우상단 오버레이 · 모바일: 하단 시트) -->
+      <aside id="filter-overlay" class="map-overlay map-overlay--top-right" aria-label="지도 필터">
+        <button type="button" class="sheet-handle" aria-label="시트 닫기"></button>
+        <h2 class="overlay-title">필터</h2>
+        <div class="field">
+          <label for="age-slider">
+            경과연수 <strong><span id="age-val">15</span>년 이상</strong>
+          </label>
+          <input type="range" id="age-slider" min="0" max="60" step="1" value="15" />
+        </div>
+        <div class="field">
+          <label for="gfa-slider">
+            연면적 <strong><span id="gfa-val">500</span>㎡ 이상</strong>
+          </label>
+          <input type="range" id="gfa-slider" min="0" max="5000" step="100" value="500" />
+        </div>
+        <div class="field">
+          <span class="field-label">주용도</span>
+          <div id="use-list" class="checks"></div>
+        </div>
+        <div class="field">
+          <label class="inline">
+            <input type="checkbox" id="unknown-toggle" /> 정보 미확보 건물 포함
+          </label>
+        </div>
+        <button id="reset-btn" type="button" class="reset">필터 초기화</button>
+      </aside>
+
+      <!-- 샘플 데이터 알림 배너 (5-E 에서 위치 조정) -->
+      <div id="banner" class="banner" hidden></div>
+
+      <!-- 상세 (데스크톱: 우측 슬라이드 · 모바일: 하단 시트) -->
+      <section class="detail-slideout" id="detail-card" hidden
+               role="region" aria-labelledby="detail-name">
+        <button type="button" class="sheet-handle" aria-label="시트 닫기"></button>
+        <header class="detail-head">
+          <h3 id="detail-name"></h3>
+          <button id="detail-close" type="button" aria-label="상세 정보 닫기">✕</button>
+        </header>
+        <dl id="detail"></dl>
+      </section>
+    </div>
+  </section>
+
+  <section id="ranking">
+    <div class="section-container">
+      <p class="eyebrow">우선순위</p>
+      <h2 class="section-title">Top 50 그린리모델링 후보</h2>
+      <p id="ranking-context" class="ranking-context">로딩 중…</p>
+
+      <div class="ranking-tablewrap">
+        <table id="ranking-table" class="ranking-table">
+          <caption class="sr-only">우선순위 점수 기준 그린리모델링 후보 건물 순위표</caption>
+          <thead>
+            <tr>
+              <th class="col-rank">순위</th>
+              <th class="col-name sortable" data-sort="bldgName" aria-sort="none">건물명 <span class="sort-ic"></span></th>
+              <th class="col-dong sortable" data-sort="dong" aria-sort="none">동 <span class="sort-ic"></span></th>
+              <th class="col-yr sortable" data-sort="approvalYear" aria-sort="none">사용승인 <span class="sort-ic"></span></th>
+              <th class="col-age sortable" data-sort="buildingAge" aria-sort="none">경과 <span class="sort-ic"></span></th>
+              <th class="col-gfa sortable" data-sort="grossFloorArea" aria-sort="none">연면적 <span class="sort-ic"></span></th>
+              <th class="col-use sortable" data-sort="mainUse" aria-sort="none">주용도 <span class="sort-ic"></span></th>
+              <th class="col-score sortable" data-sort="priority_score" aria-sort="descending">점수 <span class="sort-ic"></span></th>
+            </tr>
+          </thead>
+          <tbody id="ranking-tbody">
+            <tr><td colspan="8" class="ranking-loading">
+              <span class="spinner spinner--sm" aria-hidden="true"></span>
+              우선순위 점수 정렬 중…
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ranking-actions">
+        <button type="button" id="ranking-more" class="btn-secondary" hidden>Top 100 더보기 ▼</button>
+        <button type="button" id="ranking-csv" class="btn-secondary" disabled>CSV 전체 다운로드</button>
+      </div>
+    </div>
+  </section>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <!-- 샘플 데이터 (fallback — 항상 로드) -->
+  <script src="data/sample_paldal_green_targets.js"></script>
+  <!-- 실데이터는 app.js 가 build/gold/geojson/paldal_current.geojson 을 fetch 로 로드 -->
+  <script src="app.js"></script>
+  <!-- Top 순위표 — 별도 fetch (디스크 캐시 재사용) -->
+  <script src="ranking.js"></script>
+
+  <!-- 페이지 푸터 (STEP 5-E) -->
+  <footer id="sources" class="page-footer">
+    <div class="section-container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>데이터 출처</h3>
+          <ul>
+            <li>NGII 연속수치지도 (건물 레이어)</li>
+            <li>건축HUB 건축물대장 표제부 API</li>
+            <li>도로명주소 기반 매칭</li>
+            <li>좌표계: WGS84 (EPSG:4326)</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>방법론</h3>
+          <ul>
+            <li>Bronze / Silver / Gold medallion 파이프라인</li>
+            <li>도로명 4단계 fallback 매칭 (1:1 → 1:N → N:1 → N:M)</li>
+            <li>Tukey IQR 이상치 펜스</li>
+            <li>우선순위 점수: 경과 50 / 면적 30 / 용도 20</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>제작자</h3>
+          <ul>
+            <li>작성자: <span class="placeholder">[이름]</span></li>
+            <li>연락처: <span class="placeholder">[이메일]</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>빌드 정보</h3>
+          <ul>
+            <li>스냅샷: 2026-05</li>
+            <li>빌드: v2-pipeline</li>
+            <li>대상: 수원시 팔달구 (41115)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        Algorithmic Ground Explorer · 그린리모델링 우선 대상 발굴
+      </div>
+    </div>
+  </footer>
+
+  <!-- STEP 3 B-2: 분석 카드 accordion 토글 (한 번에 하나만 열림) -->
+  <script>
+    (function () {
+      'use strict';
+      var toggles = document.querySelectorAll('.analysis-card .card-toggle');
+      if (!toggles.length) return;
+      toggles.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var expanded = btn.getAttribute('aria-expanded') === 'true';
+          toggles.forEach(function (other) {
+            if (other !== btn) {
+              other.setAttribute('aria-expanded', 'false');
+              var od = document.getElementById(other.getAttribute('aria-controls'));
+              if (od) od.hidden = true;
+            }
+          });
+          btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          var detail = document.getElementById(btn.getAttribute('aria-controls'));
+          if (detail) detail.hidden = expanded;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
