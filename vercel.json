@@ -8,20 +8,26 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/build/gold/geojson/(.+)\\.geojson",
+      "source": "/build/gold/geojson/:file*.geojson",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=604800" },
         { "key": "Content-Type", "value": "application/geo+json; charset=utf-8" }
       ]
     },
     {
-      "source": "/(.*)\\.html",
+      "source": "/:path*.html",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
     },
     {
-      "source": "/(.*\\.(css|js))",
+      "source": "/:path*.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/:path*.js",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
       ]
