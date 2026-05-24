@@ -262,9 +262,10 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""
   ></script>
-  <!-- 샘플 데이터 (fallback — 항상 로드) -->
-  <script src="data/sample_paldal_green_targets.js"></script>
-  <!-- 실데이터는 app.js 가 build/gold/geojson/paldal_current.geojson 을 fetch 로 로드 -->
+  <!-- 실데이터는 app.js 가 build/gold/geojson/paldal_current.geojson 을 fetch 로 로드.
+       구버전 샘플 fallback 스크립트는 7-E (2026-05-24) 에서 제거됨 — Vercel 에 data/
+       제외돼 404 노이즈 발생, 실데이터 안정적이라 fallback 불필요. app.js 의
+       GREEN_TARGETS_SAMPLE 참조는 자연스럽게 null 처리됨. -->
   <script src="app.js"></script>
   <!-- Top 순위표 — 별도 fetch (디스크 캐시 재사용) -->
   <script src="ranking.js"></script>
